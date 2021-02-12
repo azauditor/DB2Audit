@@ -2,12 +2,30 @@
 
 These are queries to to help assist with retrieving users inside of a DB2 database and the permissions these users are assigned. The queries are designed to only read data and will not modify or create data inside of the database.
 
-## Server Groups
+## Database Information
 
-This will show the names of the server groups granted SYSADM, SYSCTRL, SYSMAINT, and SYSMON.
+Running both queries will show database configuration information, including security settings and the names of the server groups granted SYSADM, SYSCTRL, SYSMAIN, and SYSMON.
 
-``` SQL
+```` SQL
+GET DATABASE CONFIGURATION
 GET DATABASE MANAGER CONFIGURATION
+````
+
+## Instance Owner
+
+This will return the authorization ID of the instance owner.
+
+```` SQL
+db2 "values SYSPROC.AUTH_GET_INSTANCE_AUTHID()"
+````
+
+## Authorization IDs
+
+This will return a list of all users, roles and groups that exist in the database catalog.
+
+```` SQL
+SELECT *
+FROM SYSIBMADM.AUTHORIZATIONIDS
 ````
 
 ## System Privileges
@@ -19,13 +37,13 @@ SELECT *
 FROM SYSIBMADM.PRIVILEGES
 ````
 
-## Authorization IDs
+## Role Authorizations
 
-This will show all AuthIDs and their type.
+This will show the roles granted to users, groups, or roles.
 
 ```` SQL
 SELECT *
-FROM SYSIBMADM.AUTHORIZATIONIDS
+FROM SYSCAT.ROLEAUTH
 ````
 
 ## DBADM

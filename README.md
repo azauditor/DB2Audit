@@ -1,6 +1,6 @@
 # DB2Audit
 
-These are queries to to help assist with retrieving users inside of a DB2 database and the permissions these users are assigned. The queries are designed to only read data and will not modify or create data inside of the database.
+These are queries to help assist with retrieving users inside of a DB2 database and the permissions these users are assigned. The queries are designed to only read data and will not modify or create data inside of the database.
 
 ## Database Information
 
@@ -9,6 +9,30 @@ Running both queries will show database configuration information, including sec
 ```` SQL
 GET DATABASE CONFIGURATION
 GET DATABASE MANAGER CONFIGURATION
+````
+
+## Database Version
+
+This will return the version of the DB2 database. 
+
+```` SQL
+db2level
+````
+
+## Groups
+
+This will return all users contained in each system group. 
+
+```` SQL
+cat /etc/group > group.txt
+````
+
+## Users
+
+This will return all user accounts. 
+
+```` SQL
+cat /etc/passwd > accounts.txt
 ````
 
 ## Instance Owner
@@ -46,16 +70,15 @@ SELECT *
 FROM SYSCAT.ROLEAUTH
 ````
 
-## DBADM
+## Database Level Authorities
 
 This will show all users granted various administrator-type authorities.
 
 ```` SQL
 SELECT DISTINCT GRANTEE, GRANTEETYPE, DBADMAUTH, 
-SECURITYADMAUTH, ACCESSCTRLAUTH, DATAACCESSAUTH
+SECURITYADMAUTH, ACCESSCTRLAUTH
 FROM SYSCAT.DBAUTH
 WHERE DBADMAUTH = 'Y' OR
 SECURITYADMAUTH = 'Y' OR
 ACCESSCTRLAUTH = 'Y' OR
-DATAACCESSAUTH = 'Y'
 ````
